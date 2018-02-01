@@ -149,7 +149,7 @@ namespace LibCPK
 
         public static string GetSafePath(string filename)
         {
-            return string.Join("_", filename.Split(Path.GetInvalidFileNameChars()));
+            return string.Join("_", filename.Split(Path.GetInvalidPathChars())).TrimStart('/');
         }
 
     }

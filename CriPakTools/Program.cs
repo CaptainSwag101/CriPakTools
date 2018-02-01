@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using System.Runtime.InteropServices;
 using LibCPK;
+
 namespace CriPakTools
 {
     public class SystemEncoding
@@ -13,40 +13,29 @@ namespace CriPakTools
     }
     class Program
     {
-        [DllImport("user32.dll", EntryPoint = "MessageBox")]
-        public static extern int MsgBox(IntPtr hwnd, string text, string caption, uint type);
-        public static void ShowMsgBox(string msg)
-        {
-            MsgBox(IntPtr.Zero, msg, "CriPakTools", 1);
-        }
-        
-
         static void Main(string[] args)
         {
             if (args.Length == 0)
             {
 
-                Console.WriteLine("error: no args\n");
-                Console.WriteLine("====================");
-                Console.WriteLine("This tool has been redesigned, please use CriPakGUI.exe ");
-                Console.WriteLine("====================");
-                Console.WriteLine("This tool is based on the codes by Falo , Nanashi3 ,esperknight and uyjulian");
-                Console.WriteLine("I forked and added batch reimport and compress code .");
-                Console.WriteLine("Thanks for KenTse 's CRILAYLA compression method");
-                Console.WriteLine("                                     by: wmltogether@gmail.com");
+                Console.WriteLine("Error: no args provided\n");
+                Console.WriteLine("=======================");
+                Console.WriteLine("This tool is based on code by Falo, Nanashi3, esperknight, and uyjulian");
+                Console.WriteLine("I forked and added batch reimport and compress code.");
+                Console.WriteLine("Thanks for KenTse's CRILAYLA compression method");
+                Console.WriteLine("                             by: wmltogether@gmail.com");
                 Console.WriteLine("CriPakTool Usage:");
-                Console.WriteLine(" -e - set encodings (utf8, utf16, cp932)");
-                Console.WriteLine(" -l - Displays all contained chunks.");
-                Console.WriteLine(" -x - Extracts all files.");
-                Console.WriteLine(" -r REPLACE_ME REPLACE_WITH - Replaces REPLACE_ME with REPLACE_WITH.");
-                Console.WriteLine(" -o OUT_FILE - Set output file.");
-                Console.WriteLine(" -d OUT_DIR - Set output directory.");
-                Console.WriteLine(" -i IN_FILE - Set input file.");
+                Console.WriteLine(" -e - Set encodings (utf8, utf16, cp932)");
+                Console.WriteLine(" -l - Displays all contained chunks");
+                Console.WriteLine(" -x - Extracts all files");
+                Console.WriteLine(" -r [REPLACE_ME REPLACE_WITH] - Replaces REPLACE_ME with REPLACE_WITH");
+                Console.WriteLine(" -o [OUT_FILE] - Set output file");
+                Console.WriteLine(" -d [OUT_DIR] - Set output directory");
+                Console.WriteLine(" -i [IN_FILE] - Set input file");
                 Console.WriteLine(" -c - use CRILAYLA compression");
                 Console.WriteLine(" -y - use legacy (c)CRI decompression");
-                Console.WriteLine(" -b BATCH_REPLACE_LIST_TXT - Batch Replace file recorded in filelist.txt .");
-                Console.WriteLine(" -h HELP");
-                Program.ShowMsgBox("Error:  \n  Please run this program from console!");
+                Console.WriteLine(" -b [BATCH_REPLACE_LIST_TXT] - Batch replace file recorded in filelist.txt");
+                Console.WriteLine(" -h - Displays this screen");
                 
                 return;
             }
@@ -93,22 +82,24 @@ namespace CriPakTools
                         case 'c': bUseCompress = true; break;
                         case 'r': doReplace = true; replaceMe = args[i + 1]; replaceWith = args[i + 2]; break;
                         case 'l': doDisplay = true; break;
-                        case 'd': outDir = args[i + 1]; break;
+                        case 'd': outDir = args[i + 1].TrimEnd('\\'); break;
                         case 'i': inFile = args[i + 1]; break;
                         case 'o': outFile = args[i + 1]; break;
                         case 'b': doBatchReplace = true; batch_text_name = args[i + 1]; break;
                         case 'y': bUseLegacyCompress = true; break;
-                        case 'h': 
+                        case 'h':
                             Console.WriteLine("CriPakTool Usage:");
-                            Console.WriteLine(" -l - Displays all contained chunks.");
-                            Console.WriteLine(" -x - Extracts all files.");
+                            Console.WriteLine(" -e - Set encodings (utf8, utf16, cp932)");
+                            Console.WriteLine(" -l - Displays all contained chunks");
+                            Console.WriteLine(" -x - Extracts all files");
+                            Console.WriteLine(" -r [REPLACE_ME REPLACE_WITH] - Replaces REPLACE_ME with REPLACE_WITH");
+                            Console.WriteLine(" -o [OUT_FILE] - Set output file");
+                            Console.WriteLine(" -d [OUT_DIR] - Set output directory");
+                            Console.WriteLine(" -i [IN_FILE] - Set input file");
                             Console.WriteLine(" -c - use CRILAYLA compression");
-                            Console.WriteLine(" -r REPLACE_ME REPLACE_WITH - Replaces REPLACE_ME with REPLACE_WITH.");
-                            Console.WriteLine(" -o OUT_FILE - Set output file.");
-                            Console.WriteLine(" -d OUT_DIR - Set output directory.");
-                            Console.WriteLine(" -i IN_FILE - Set input file.");
-                            Console.WriteLine(" -b BATCH_REPLACE_LIST_TXT - Batch Replace file recorded in filelist.txt .");
-                            Console.WriteLine(" -h HELP");
+                            Console.WriteLine(" -y - use legacy (c)CRI decompression");
+                            Console.WriteLine(" -b [BATCH_REPLACE_LIST_TXT] - Batch replace file recorded in filelist.txt");
+                            Console.WriteLine(" -h - Displays this screen");
 
                             Console.WriteLine("    [Extract files from cpk]");
                             Console.WriteLine("    CriPakTool.exe -x -i xxx.cpk -d xxx.cpk_unpacked");
@@ -124,14 +115,17 @@ namespace CriPakTools
                             return;
                         default:
                             Console.WriteLine("CriPakTool Usage:");
-                            Console.WriteLine(" -l - Displays all contained chunks.");
-                            Console.WriteLine(" -x - Extracts all files.");
+                            Console.WriteLine(" -e - Set encodings (utf8, utf16, cp932)");
+                            Console.WriteLine(" -l - Displays all contained chunks");
+                            Console.WriteLine(" -x - Extracts all files");
+                            Console.WriteLine(" -r [REPLACE_ME REPLACE_WITH] - Replaces REPLACE_ME with REPLACE_WITH");
+                            Console.WriteLine(" -o [OUT_FILE] - Set output file");
+                            Console.WriteLine(" -d [OUT_DIR] - Set output directory");
+                            Console.WriteLine(" -i [IN_FILE] - Set input file");
                             Console.WriteLine(" -c - use CRILAYLA compression");
-                            Console.WriteLine(" -r REPLACE_ME REPLACE_WITH - Replaces REPLACE_ME with REPLACE_WITH.");
-                            Console.WriteLine(" -o OUT_FILE - Set output file.");
-                            Console.WriteLine(" -d OUT_DIR - Set output directory.");
-                            Console.WriteLine(" -i IN_FILE - Set input file.");
-                            Console.WriteLine(" -b BATCH_REPLACE_LIST_TXT - Batch Replace file recorded in filelist.txt .");
+                            Console.WriteLine(" -y - use legacy (c)CRI decompression");
+                            Console.WriteLine(" -b [BATCH_REPLACE_LIST_TXT] - Batch replace file recorded in filelist.txt");
+                            Console.WriteLine(" -h - Displays this screen");
                             break;
 
                     }
@@ -139,13 +133,13 @@ namespace CriPakTools
              }
             if (inFile == "")
             {
-                Console.WriteLine("ERROR :You must give -i argv");
+                Console.WriteLine("ERROR: You must give -i argv");
                 return;
             }
 
             if (!File.Exists(inFile))
             {
-                Console.WriteLine("ERROR :INPUT FILE NOT EXISTS");
+                Console.WriteLine("ERROR: INPUT FILE NOT EXISTS");
                 return;
             }
 
@@ -204,7 +198,7 @@ namespace CriPakTools
                     oldFile.BaseStream.Seek((long)entries[i].FileOffset, SeekOrigin.Begin);
 
                     byte[] chunk = oldFile.ReadBytes(Int32.Parse(entries[i].FileSize.ToString()));
-                    Console.WriteLine("FileName :{0}\n    FileOffset:{1:x8}    ExtractSize:{2:x8}   ChunkSize:{3:x8}", 
+                    Console.WriteLine("FileName:{0}\n    FileOffset:{1:x8}    ExtractSize:{2:x8}   ChunkSize:{3:x8}", 
                                                                             entries[i].FileName.ToString(),
                                                                             (long)entries[i].FileOffset, 
                                                                             entries[i].ExtractSize, 
