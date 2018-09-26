@@ -590,7 +590,9 @@ namespace LibCPK
             for (int i = 0; i < fileEntries.Count; i++)
             {
                 FileTable[i].LocalDir = GetColumnData(files, i, "LocalDir");
-                FileTable[i].UpdateDateTime = (ulong)GetColumnData(files, i, "UpdateDateTime");
+                var tUpdateDateTime = GetColumnData(files, i, "UpdateDateTime");
+                if (tUpdateDateTime == null) tUpdateDateTime = 0;
+                FileTable[i].UpdateDateTime = (ulong)tUpdateDateTime;
             }
 
             return true;
